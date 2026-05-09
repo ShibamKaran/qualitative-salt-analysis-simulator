@@ -3,14 +3,14 @@ import random
 #global variables
 user_dry_guess = None
 user_confirmatory_guess = None
+anion_complete = False
+cation_complete = False
 
-
+#anions and their test data
 anions = ("acetate",
            "carbonate", "sulphide", "sulphite", "nitrite",
            "chloride", "bromide", "iodide", "nitrate",
            "sulphate")
-ion_type = "anion"
-ion = random.choice(anions)
 anion_data = {
             #acetate test
             "acetate":{
@@ -126,20 +126,171 @@ anion_data = {
             }
 }
 
+#cations and their test data
+cations = ("ammonium",
+            "lead", "copper",
+            "ferric", "aluminium",
+            "zinc", "cobalt", "nickel", "manganese",
+            "barium", "calcium", "strontium", 
+            "magnesium")
+
+cation_data = {
+            #group 0
+            "ammonium":{
+                "wet_test":{
+                    "action": ("concentrated sodium hydroxide", "heat"),
+                    "observation": "ammonia smell"
+                },
+                "confirmatory_test":{
+                    "action": ("concentrated sodium hydroxide", "heat","nessler's reagent"),
+                    "observation": "brown precipitate"
+                }
+            },
+            #group 1
+            "lead":{
+                "wet_test":{
+                    "action": ("water","dilute hydrochloric acid"),
+                    "observation": "white precipitate"
+                },
+                "confirmatory_test":{
+                    "action": ("water","potassium iodide"),
+                    "observation": "yellow precipitate"
+                }
+            },
+            #group 2
+            "copper":{
+                "wet_test":{
+                    "action": ("water","dilute hydrochloric acid","sodium sulphide"),
+                    "observation": "black precipitate"
+                },
+                "confirmatory_test":{ 
+                    "action": ("water","ammonium hydroxide"),
+                    "observation": "deep blue color"
+                }
+            },
+            #group 3
+            "ferric":{
+                "wet_test":{
+                    "action": ("water","ammonium chloride","ammonium hydroxide"),
+                    "observation": "reddish-brown precipitate"
+                },
+                "confirmatory_test":{
+                    "action": ("water","dilute hydrochloric acid","potassium ferrocyanide"),
+                    "observation": "prussian blue color"
+                }
+            },
+            "aluminium":{
+                "wet_test":{
+                    "action": ("water","ammonium chloride","ammonium hydroxide"),
+                    "observation": "white precipitate"
+                },
+                "confirmatory_test":{
+                    "action": ("water","dilute hydrochloric acid","blue litmus solution", "ammonium hydroxide"),
+                    "observation": "suspended blue precipitate"
+                }
+            },
+            #group 4
+            "zinc":{
+                "wet_test":{
+                    "action": ("water","ammonium chloride","ammonium hydroxide", "sodium sulphide"),
+                    "observation": "white precipitate"
+                },
+                "confirmatory_test":{
+                    "action": ("water","potassium ferrocyanide"),
+                    "observation": "bluish-white precipitate"
+                }
+            },
+            "cobalt":{
+                "wet_test":{
+                    "action": ("water","ammonium chloride","ammonium hydroxide", "sodium sulphide"),
+                    "observation": "black precipitate"
+                },
+                "confirmatory_test":{
+                    "action": ("water","potassium nitrite", "ammonium hydroxide"),
+                    "observation": "yellow precipitate"
+                }
+            },
+            "nickel":{
+                "wet_test":{
+                    "action": ("water","ammonium chloride","ammonium hydroxide", "sodium sulphide"),
+                    "observation": "black precipitate"
+                },
+                "confirmatory_test":{
+                    "action": ("water","sodium hydroxide", "bromine water"),
+                    "observation": "black precipitate"
+                }
+            },
+            "manganese":{
+                "wet_test":{
+                    "action": ("water","ammonium chloride","ammonium hydroxide", "sodium sulphide"),
+                    "observation": "flesh-colored precipitate"
+                },
+                "confirmatory_test":{
+                    "action": ("water", "sodium hydroxide"),
+                    "observation": "white precipitate"
+                }
+            },
+            #group 5
+            "barium":{
+                "wet_test":{
+                    "action": ("water","ammonium chloride","ammonium hydroxide", "ammonium carbonate"),
+                    "observation": "white precipitate"
+                },
+                "confirmatory_test":{
+                    "action": ("water","potassium chromate"),
+                    "observation": "yellow precipitate"
+                }
+            },
+            "calcium":{
+                "wet_test":{
+                    "action": ("water","ammonium chloride","ammonium hydroxide", "ammonium carbonate"),
+                    "observation": "white precipitate"
+                },
+                "confirmatory_test":{
+                    "action": ("water","ammonium oxalate"),
+                    "observation": "white precipitate"
+                }
+            },
+            "strontium":{
+                "wet_test":{
+                    "action": ("water","ammonium chloride","ammonium hydroxide", "ammonium carbonate"),
+                    "observation": "white precipitate"
+                },
+                "confirmatory_test":{
+                    "action": ("water","ammonium sulphate"),
+                    "observation": "white precipitate" 
+                }
+            },
+            #group 6
+            "magnesium":{
+                "wet_test":{
+                    "action": (),
+                    "observation": "no reaction"
+                },
+                "confirmatory_test":{
+                    "action": ("water","ammonium chloride","ammonium hydroxide", "diammonium hydrogen phosphate"),
+                    "observation": "white precipitate"
+                }
+            }
+}           
+
+ion_type = "anion"
+ion = random.choice(anions)
+
 def test_evaluator(ion_type, ion, test_type, user_action):
     #Compare action and return observation if action is correct else return no reaction
 
     # ion_type: "anion" or "cation"
     # ion: name of the ion to be gussed
-    # test_type: "dry_test" or "confirmatory_test"
+    # test_type: anions - "dry_test" or "confirmatory_test"
+    #            cations - "wet_test" or "confirmatory_test"
     # user_action: (tuple) of actions performed by the user in the test 
 
     ref_data = None
     if ion_type == "anion":
-        ref_data = anion_data[ion][test_type]
-    else:
-        # cation test data to be added later
-        pass
+        ref_data = anion_data[ion][test_type] 
+    else: #cation
+        ref_data = cation_data[ion][test_type]
 
     if sorted(user_action) == sorted(ref_data["action"]):
         return ref_data["observation"]
@@ -149,7 +300,8 @@ def test_evaluator(ion_type, ion, test_type, user_action):
 #print(test_evaluator("anion", "acetate", "dry_test", ("water drops", "oxalic acid")))
 
 def user_console(ion):
-    #This function will handle the user interaction
+    #this function will handle the user interaction
+    #every variable in this func is a local var, update to global variable takes place in handle_action func
     print("Perfom dry test")
     curr_state = "awaiting_dry_test"
     while curr_state != "done":
@@ -183,18 +335,25 @@ def user_action_input():
 
 def handle_action(state, user_input,confirmatory_test_result=None):
     global user_dry_guess , user_confirmatory_guess
-    if state == "awaiting_dry_test":
+    if state == "choosing_phase":
+        # process user choice to perform anion tests or cation tests
+        if user_input == "anion":
+            return "You have chosen to test for anions. Let's start with the dry test.", "awaiting_dry_test"
+        elif user_input == "cation":
+            return "You have chosen to test for cations. Let's start with the wet test.", "awaiting_wet_test"
+    
+    elif state == "awaiting_dry_test":
         # Process dry test action
         result = test_evaluator(ion_type, ion, "dry_test", user_input)
-        if result != "no reaction":
-            return result, "interpreting_dry_test" #next state
-        else:
-            return result, "awaiting_dry_test" #next state = current state, ask for input again
+        return result, "interpreting_dry_test" #next state
         
     elif state == "interpreting_dry_test":
         # Process dry test results and determine next steps
         user_dry_guess = user_input
-        return "Move to confirmatory test", "awaiting_confirmatory_test" #next state
+        if user_dry_guess == "cannot guess yet":
+            return "Let's do another dry test!", "awaiting_dry_test" #stay in the same state
+        else:
+            return "Move to confirmatory test", "awaiting_confirmatory_test" #next state
 
     elif state == "awaiting_confirmatory_test":
         # Process confirmatory test action
@@ -215,21 +374,40 @@ def handle_action(state, user_input,confirmatory_test_result=None):
         #will provide a feedback only if the user wants
         if user_input == "yes":
             if user_dry_guess == ion:
-                if user_confirmatory_guess != ion: 
+                if user_confirmatory_guess != ion and confirmatory_test_result != "no reaction": 
                     return "Did you guess the ion after confirmatory test correctly?", "interpreting_confirmatory_test"
-                elif confirmatory_test_result == "no reaction":
+                else: #confirmatory_test_result == "no reaction":
                     return "Did you perform the correct confirmatory test?", "awaiting_confirmatory_test"
                 
             else: #dry test guess or action was wrong
                 return "Did you perform the dry test correctly?", "awaiting_dry_test"
         else:
             return f"No feedback/sugesstion provided. The ion was {ion}", "done"
-            
+
+    elif state == "awaiting_wet_test":
+        # process wet test action
+        result = test_evaluator(ion_type, ion, "wet_test", user_input)
+        return result, "interpreting_wet_test" #next state
+        
+    elif state == "interpreting_wet_test":
+        # process wet test results and determine next steps
+
+        pass
+    elif state == "awaiting_confirmatory_test_cation":
+        # process confirmatory test action for cation and determine next steps
+        pass
+    elif state == "interpreting_confirmatory_test_cation":
+        # process confirmatory test results for cation and determine final outcome
+        pass
+    elif state == "feedback_cation":
+        #will provide a feedback only if the user wants
+        pass
+       
     elif state == "done":
         return "Thank you for playing!", "done"
 
 
-
+print(ion)
 user_console(ion)
 
 
