@@ -27,3 +27,6 @@ School students (Class 11/12) preparing for chemistry practical exams, particula
 
 ## Built with
 Python
+
+## Background
+Built by a Shibam Karan, school student who experienced firsthand how difficult salt analysis practicals are to prepare for. No simulator like this existed — so one was built.
