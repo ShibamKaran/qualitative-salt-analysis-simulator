@@ -107,7 +107,7 @@ anion_data = {
 
             "nitrate":{
                 "dry_test":{
-                    "action": ("concentrated sulphuric acid","copper turnings","heat"),
+                    "action": ("concentrated hydrochloric acid","copper turnings","heat"),
                     "observation": "brown fumes"
                 },
                 "confirmatory_test":{ #brown ring test
@@ -277,8 +277,8 @@ cation_data = {
             }
 }           
 
-ion_type = "cation"
-ion = random.choice(cations)
+anion = random.choice(anions)
+cation = random.choice(cations)
 
 def test_evaluator(ion_type, ion, test_type, user_action):
     #Compare action and return observation if action is correct else return no reaction
@@ -302,7 +302,7 @@ def test_evaluator(ion_type, ion, test_type, user_action):
     
 #print(test_evaluator("anion", "acetate", "dry_test", ("water drops", "oxalic acid")))
 
-def user_console_anion(ion):
+def user_console_anion():
     #this function will handle the anion part user interaction
     #every variable in this func is a local var, update to global variable takes place in handle_action func
     print("Perfom dry test")
@@ -331,7 +331,7 @@ def user_console_anion(ion):
             print(msg)
     print("Anion test complete. Thank you for playing!")
     
-def user_console_cation(ion):
+def user_console_cation():
     #this function will handle the cation part user interaction
     #every variable in this func is a local var, update to global variable takes place in handle_action func
     print("Perfom wet test")
@@ -361,16 +361,17 @@ def user_console_cation(ion):
             print(msg)
     print("Cation test complete. Thank you for playing!")
 
-def user_console(ion):
+def user_console():
     #this function will handle the overall user interaction for both anion and cation testing
     while not(anion_complete and cation_complete):
         phase = input("Do you want to test for anions or cations? (anion/cation) ")
         if phase == "anion":
-            user_console_anion(ion)
+            user_console_anion()
         elif phase == "cation":
-            user_console_cation(ion)
+            user_console_cation()
     
     print("All tests complete. Thank you for playing!")
+    print(f"The salt was {cation} {anion}")
 
 
 def tuple_input(msg):
@@ -391,7 +392,7 @@ def handle_action(state, user_input,confirmatory_test_result=None):
         
     if state == "awaiting_dry_test":
         # Process dry test action
-        result = test_evaluator(ion_type, ion, "dry_test", user_input)
+        result = test_evaluator("anion", anion, "dry_test", user_input)
         return result, "interpreting_dry_test" #next state
         
     elif state == "interpreting_dry_test":
@@ -404,7 +405,7 @@ def handle_action(state, user_input,confirmatory_test_result=None):
 
     elif state == "awaiting_confirmatory_test":
         # Process confirmatory test action
-        result = test_evaluator(ion_type, ion, "confirmatory_test", user_input)
+        result = test_evaluator("anion", anion, "confirmatory_test", user_input)
         if result != "no reaction":
             return result, "interpreting_confirmatory_test" #next state
         else:
@@ -413,7 +414,7 @@ def handle_action(state, user_input,confirmatory_test_result=None):
     elif state == "interpreting_confirmatory_test":
         # Process confirmatory test results and determine final outcome
         anion_confirmatory_guess = user_input
-        if anion_confirmatory_guess == ion:
+        if anion_confirmatory_guess == anion:
             anion_complete = True
             return "Correct! The ion is present.", "choosing_phase"
         else:
@@ -421,8 +422,8 @@ def handle_action(state, user_input,confirmatory_test_result=None):
     elif state == "feedback":
         #will provide a feedback only if the user wants
         if user_input == "yes":
-            if anion_dry_guess == ion:
-                if anion_confirmatory_guess != ion and confirmatory_test_result != "no reaction": 
+            if anion_dry_guess == anion:
+                if anion_confirmatory_guess != anion and confirmatory_test_result != "no reaction": 
                     return "Did you guess the ion after confirmatory test correctly?", "interpreting_confirmatory_test"
                 else: #confirmatory_test_result == "no reaction":
                     return "Did you perform the correct confirmatory test?", "awaiting_confirmatory_test"
@@ -431,11 +432,11 @@ def handle_action(state, user_input,confirmatory_test_result=None):
                 return "Did you perform the dry test correctly?", "awaiting_dry_test"
         else:
             anion_complete = True
-            return f"No feedback/sugesstion provided. The ion was {ion}", "choosing_phase"
+            return f"No feedback/sugesstion provided. The anion was {anion}", "choosing_phase"
 
     elif state == "awaiting_wet_test":
         # process wet test action
-        result = test_evaluator(ion_type, ion, "wet_test", user_input)
+        result = test_evaluator("cation", cation, "wet_test", user_input)
         return result, "interpreting_wet_test" #next state
         
     elif state == "interpreting_wet_test":
@@ -448,7 +449,7 @@ def handle_action(state, user_input,confirmatory_test_result=None):
 
     elif state == "awaiting_confirmatory_test_cation":
         # process confirmatory test action for cation and determine next steps
-        result = test_evaluator(ion_type, ion, "confirmatory_test", user_input)
+        result = test_evaluator("cation", cation, "confirmatory_test", user_input)
         return result, "interpreting_confirmatory_test_cation" #next state
         
     elif state == "interpreting_confirmatory_test_cation":
@@ -456,7 +457,7 @@ def handle_action(state, user_input,confirmatory_test_result=None):
         cation_confirmatory_guess = user_input
         if cation_confirmatory_guess == "cannot guess yet":
             return "Let's do another confirmatory test!", "awaiting_confirmatory_test_cation" #stay in the same state
-        elif cation_confirmatory_guess == ion:
+        elif cation_confirmatory_guess == cation:
             cation_complete = True
             return "Correct! The ion is present.", "choosing_phase"
         else:
@@ -465,8 +466,8 @@ def handle_action(state, user_input,confirmatory_test_result=None):
     elif state == "feedback_cation":
         #will provide a feedback only if the user wants
         if user_input == "yes":
-            if ion in cation_wet_guess:
-                if cation_confirmatory_guess != ion and confirmatory_test_result != "no reaction":
+            if cation in cation_wet_guess:
+                if cation_confirmatory_guess != cation and confirmatory_test_result != "no reaction":
                     return "Did you guess the ion after confirmatory test correctly?", "interpreting_confirmatory_test_cation"
                 else: #confirmatory_test_result == "no reaction":
                     return "Did you perform the correct confirmatory test?", "awaiting_confirmatory_test_cation"
@@ -474,12 +475,9 @@ def handle_action(state, user_input,confirmatory_test_result=None):
                 return "Did you perform the wet test correctly?", "awaiting_wet_test"
         else:
             cation_complete = True             
-            return f"No feedback/sugesstion provided. The ion was {ion}", "choosing_phase"
+            return f"No feedback/sugesstion provided. The cation was {cation}", "choosing_phase"
 
 
-
-#print(ion)
-user_console_cation(ion)
-
+user_console()
 
 
