@@ -18,15 +18,43 @@ School students (Class 11/12) preparing for chemistry practical exams, particula
 - Console version complete and tested
 - Full anion detection (10 anions) with dry test and confirmatory test
 - Full cation detection (13 cations) with wet test and confirmatory test
-- State machine architecture ready for GUI transition
+- Logic layer separated and ready for GUI development
+- Streamlit web app in development
+  
+## Architecture
+- `logic.py` — core logic layer: chemistry data, state machine, test evaluator. No display code.
+- `console.py` — console interface: imports from logic.py, handles terminal interaction.
+- `main.py` — original version, preserved for reference.
+- `app.py` — Streamlit web app (coming soon)
+
+## How to Run
+
+### Console version
+Make sure Python is installed, then run:
+
+**Mac/Linux:**
+```bash
+python3 console.py
+```
+**Windows:**
+```bash
+python console.py
+```
+### Web app (coming soon)
+Will be accessible via a browser link — no installation needed.
+A live link will be added here once deployed.
 
 ## Planned
-- Tkinter GUI with separate screens for each phase
-- Dropdown menus for reagent selection
-- Visual feedback and observations display
+- Interactive test tube visual that changes based on observations
+- Dropdown reagent selection
+- Accessible via browser link — no installation needed
+- Deployable free on Streamlit Cloud
 
-## Built with
-Python
+## Tech Stack
+- **Language**: Python
+- **Console version**: Built-in Python only
+- **Web app**: Streamlit (in development)
+- **Deployment**: Streamlit Cloud (free)
 
 ## Background
-Built by a Shibam Karan, school student who experienced firsthand how difficult salt analysis practicals are to prepare for. No simulator like this existed — so one was built.
+Built by Shibam Karan, a school student who experienced firsthand how difficult salt analysis practicals are to prepare for. No simulator like this existed — so one was built.
