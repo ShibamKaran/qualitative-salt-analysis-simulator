@@ -4,7 +4,7 @@ import logic
 def tuple_input(msg):
 
     inp = input(msg).split(",")
-    inp = tuple([action.strip() for action in inp])
+    inp = tuple([action.lower().strip() for action in inp])
     return inp
 
 def user_console_anion():
@@ -19,7 +19,7 @@ def user_console_anion():
             dry_test_result, curr_state = handle_action(curr_state, user_dry_action)
             print(dry_test_result)
         elif curr_state == "interpreting_dry_test":
-            anion_dry_guess = input("Which anion maybe present? ")
+            anion_dry_guess = input("Which anion maybe present? ").lower().strip()
             msg, curr_state = handle_action(curr_state, anion_dry_guess)
             print(msg)
         elif curr_state == "awaiting_confirmatory_test":
@@ -27,11 +27,11 @@ def user_console_anion():
             confirmatory_test_result, curr_state = handle_action(curr_state, user_confirmatory_action)
             print(confirmatory_test_result)
         elif curr_state == "interpreting_confirmatory_test":
-            anion_confirmatory_guess = input("Which anion is present and confirmed? ")
+            anion_confirmatory_guess = input("Which anion is present and confirmed? ").lower().strip()
             msg, curr_state = handle_action(curr_state, anion_confirmatory_guess)
             print(msg)
         elif curr_state == "feedback":
-            user_wants_feedback = input("Do you want feedback/suggestions? (yes/no) ")
+            user_wants_feedback = input("Do you want feedback/suggestions? (yes/no) ").lower().strip()
             msg, curr_state = handle_action(curr_state, user_wants_feedback,confirmatory_test_result)
             print(msg)
     print("Anion test complete. Thank you for playing!")
@@ -57,11 +57,11 @@ def user_console_cation():
             confirmatory_test_result, curr_state = handle_action(curr_state, user_confirmatory_action)
             print(confirmatory_test_result)
         elif curr_state == "interpreting_confirmatory_test_cation":
-            cation_confirmatory_guess = input("Which cation is present and confirmed? ")
+            cation_confirmatory_guess = input("Which cation is present and confirmed? ").lower().strip()
             msg, curr_state = handle_action(curr_state, cation_confirmatory_guess)
             print(msg)
         elif curr_state == "feedback_cation":
-            user_wants_feedback = input("Do you want feedback/suggestions? (yes/no) ")
+            user_wants_feedback = input("Do you want feedback/suggestions? (yes/no) ").lower().strip()
             msg, curr_state = handle_action(curr_state, user_wants_feedback,confirmatory_test_result)
             print(msg)
     print("Cation test complete. Thank you for playing!")
@@ -69,7 +69,7 @@ def user_console_cation():
 def user_console():
     #this function will handle the overall user interaction for both anion and cation testing
     while not(logic.anion_complete and logic.cation_complete):
-        phase = input("Do you want to test for anions or cations? (anion/cation) ")
+        phase = input("Do you want to test for anions or cations? (anion/cation) ").lower().strip()
         if phase == "anion":
             user_console_anion()
         elif phase == "cation":
