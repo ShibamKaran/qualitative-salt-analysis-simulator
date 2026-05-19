@@ -277,8 +277,8 @@ cation_data = {
             }
 }           
 
-anion = random.choice(anions)
-cation = random.choice(cations)
+#gets the random value from the calling file
+anion,cation = None, None
 
 def test_evaluator(ion_type, ion, test_type, user_action):
     #Compare action and return observation if action is correct else return no reaction
