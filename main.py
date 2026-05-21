@@ -219,8 +219,8 @@ cation_data = {
                     "observation": "black precipitate"
                 },
                 "confirmatory_test":{
-                    "action": ("water","sodium hydroxide", "bromine water"),
-                    "observation": "black precipitate"
+                    "action": ("water","DMG solution","ammonium hydroxide"),
+                    "observation": "rose red precipitate"
                 }
             },
             "manganese":{

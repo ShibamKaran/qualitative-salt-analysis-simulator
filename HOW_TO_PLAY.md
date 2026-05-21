@@ -77,7 +77,7 @@
 | aluminium | `water, dilute hydrochloric acid, blue litmus solution, ammonium hydroxide` | suspended blue precipitate |
 | zinc | `water, potassium ferrocyanide` | bluish-white precipitate |
 | cobalt | `water, potassium nitrite, ammonium hydroxide` | yellow precipitate |
-| nickel | `water, sodium hydroxide, bromine water` | black precipitate |
+| nickel | `water, DMG solution, ammonium hydroxide` | rose red precipitate |
 | manganese | `water, sodium hydroxide` | white precipitate |
 | barium | `water, potassium chromate` | yellow precipitate |
 | calcium | `water, ammonium oxalate` | white precipitate |

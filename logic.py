@@ -12,6 +12,8 @@ cation_complete = False
 #to store result of tests
 dry_test_observation = ""
 anion_confirmatory_observation = ""
+wet_test_observation = ""
+cation_confirmatory_observation = ""
 #anions and their test data
 anions = ("acetate",
            "carbonate", "sulphide", "sulphite", "nitrite",
@@ -222,8 +224,8 @@ cation_data = {
                     "observation": "black precipitate"
                 },
                 "confirmatory_test":{
-                    "action": ("water","sodium hydroxide", "bromine water"),
-                    "observation": "black precipitate"
+                    "action": ("water","DMG solution","ammonium hydroxide"),
+                    "observation": "rose red precipitate"
                 }
             },
             "manganese":{
@@ -314,7 +316,7 @@ def handle_action(state, user_input,confirmatory_test_result=None):
     # cations-
     #   "awaiting_wet_test", "interpreting_wet_test", "awaiting_confirmatory_test_cation", "interpreting_confirmatory_test_cation", "feedback_cation"
     # choosing phase - symbolic state
-    global anion_dry_guess , anion_confirmatory_guess , cation_wet_guess , cation_confirmatory_guess, anion_complete, cation_complete, dry_test_observation, anion_confirmatory_observation
+    global anion_dry_guess , anion_confirmatory_guess , cation_wet_guess , cation_confirmatory_guess, anion_complete, cation_complete, dry_test_observation, anion_confirmatory_observation, wet_test_observation, cation_confirmatory_observation
         
     if state == "awaiting_dry_test":
         # Process dry test action
@@ -365,6 +367,7 @@ def handle_action(state, user_input,confirmatory_test_result=None):
     elif state == "awaiting_wet_test":
         # process wet test action
         result = test_evaluator("cation", cation, "wet_test", user_input)
+        wet_test_observation = result
         return result, "interpreting_wet_test" #next state
         
     elif state == "interpreting_wet_test":
@@ -378,6 +381,7 @@ def handle_action(state, user_input,confirmatory_test_result=None):
     elif state == "awaiting_confirmatory_test_cation":
         # process confirmatory test action for cation and determine next steps
         result = test_evaluator("cation", cation, "confirmatory_test", user_input)
+        cation_confirmatory_observation = result
         return result, "interpreting_confirmatory_test_cation" #next state
         
     elif state == "interpreting_confirmatory_test_cation":
