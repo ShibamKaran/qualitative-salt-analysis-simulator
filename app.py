@@ -78,6 +78,19 @@ def phase_selection_screen():
                 st.markdown("**Cation — Basic Radical**  \n\n:small[Wet test + Confirmatory test]")
                 st.button("Start Cation Analysis", width="stretch")
 
+def draw_reagent_button(reagent_name, reagent_symbol, reagent_bottle_color):
+    with st.container(border=True,horizontal_alignment="center",gap ="xxsmall"):
+        st.image(f"images/reagents/bottle_{reagent_bottle_color}.svg",width=30)
+        if reagent_symbol == None:
+            reagent_symbol = reagent_name.title()
+
+        st.caption(reagent_symbol, text_alignment="center")
+        if st.button("Added ✅" if reagent_name in st.session_state["selected_reagents"] else "Add",
+                     disabled= reagent_name in st.session_state["selected_reagents"],
+                     key=f"{reagent_name}_btn"):
+            st.session_state["selected_reagents"].append(reagent_name)
+            st.rerun()
+
 def anion_dry_test_screen():
     st.title("ANION -- DRY TEST",
              text_alignment="center")
@@ -94,38 +107,12 @@ def anion_dry_test_screen():
         col1, col2, col3 = st.columns(3,gap="xxsmall")
         with col1:
             #oxalic acid, conc hcl
-            with st.container(border=True,horizontal_alignment="center",gap ="xxsmall"):
-                st.image("images/reagents/bottle_grey.svg",width=30)
-                st.caption("Oxalic Acid",text_alignment="center")
-                if st.button("Added ✅" if "oxalic acid" in st.session_state["selected_reagents"] else "Add",  
-                                disabled= "oxalic acid" in st.session_state["selected_reagents"],
-                                key="oxalic_acid_btn"):
-                        
-                    st.session_state["selected_reagents"].append("oxalic acid")
-                    st.rerun()  
-
-            with st.container(border=True,horizontal_alignment="center",gap="xxsmall"):
-                st.image("images/reagents/bottle_yellow.svg",width=30)
-                st.caption("Conc. HCl",text_alignment="center")
-                if st.button("Added ✅" if "concentrated hydrochloric acid" in st.session_state["selected_reagents"] else "Add",
-                            disabled= "concentrated hydrochloric acid" in st.session_state["selected_reagents"],
-                            key = "conc_hcl_btn"):
-                    
-                    st.session_state["selected_reagents"].append("concentrated hydrochloric acid")
-                    st.rerun()
-
+            draw_reagent_button("oxalic acid", None, "grey")
+            draw_reagent_button("concentrated hydrochloric acid", "Conc. HCl", "yellow")
             
         with col2:
             #water drops, copper turnings
-            with st.container(border=True,horizontal_alignment="center",gap ="xxsmall"):
-                st.image("images/reagents/bottle_blue.svg",width=30)
-                st.caption("Water Drops",text_alignment="center")
-                if st.button("Added ✅" if "water drops" in st.session_state["selected_reagents"] else "Add",  
-                            disabled= "water drops" in st.session_state["selected_reagents"],
-                            key="water_drops_btn"):
-                                            
-                    st.session_state["selected_reagents"].append("water drops")
-                    st.rerun()
+            draw_reagent_button("water drops", None, "blue")
 
             with st.container(border=True,horizontal_alignment="center",gap="xxsmall"):
                 st.image("images/reagents/copper_turnings.svg",width=60)
@@ -139,16 +126,8 @@ def anion_dry_test_screen():
             
         with col3:
             #dil hcl, heat
-            with st.container(border=True,horizontal_alignment="center",gap="xxsmall"):
-                st.image("images/reagents/bottle_green.svg",width=30)
-                st.caption("Dil. HCl",text_alignment="center")
-                if st.button("Added ✅" if "dilute hydrochloric acid" in st.session_state["selected_reagents"] else "Add",
-                            disabled= "dilute hydrochloric acid" in st.session_state["selected_reagents"],
-                            key = "dil_hcl_btn"):
-                        
-                    st.session_state["selected_reagents"].append("dilute hydrochloric acid")
-                    st.rerun()
-                
+            draw_reagent_button("dilute hydrochloric acid", "Dil. HCl", "green")
+
             with st.container(border=True,horizontal_alignment="center",gap="xxsmall"):
                 st.image("images/reagents/heat.svg",width=30)
                 st.caption("Heat",text_alignment="center")
@@ -157,7 +136,8 @@ def anion_dry_test_screen():
                             key = "heat_btn"):
                     
                     st.session_state["selected_reagents"].append("heat")
-                    st.rerun()         
+                    st.rerun()  
+
         #perform test and get result from logic
         with st.container(horizontal=True,horizontal_alignment="center",gap="medium"):
             if st.button("Perform Test", disabled = len(st.session_state["selected_reagents"])==0, width=140):
@@ -185,7 +165,7 @@ def anion_dry_test_screen():
             st.image("images/test_tubes/salt.svg")
         
 def anion_dry_test_interpretation_screen():
-    st.title("WHAT DOES IT THIS SUGGEST?", text_alignment="center")
+    st.title("WHAT DOES THIS SUGGEST?", text_alignment="center")
     st.markdown(":gray[Based on the observation, guess which anion might be present]",
                 text_alignment="center")
     st.divider()
@@ -227,108 +207,22 @@ def anion_confirmatory_test_screen():
         col1, col2, col3 = st.columns(3,gap="xxsmall")
         with col1:
             #water, ferric chloride, ferrous sulphate, barium chloride
-            with st.container(border=True,horizontal_alignment="center",gap ="xxsmall"):
-                st.image("images/reagents/bottle_blue.svg",width=30)
-                st.caption("Water",text_alignment="center")
-                if st.button("Added ✅" if "water" in st.session_state["selected_reagents"] else "Add",  
-                            disabled= "water" in st.session_state["selected_reagents"],
-                            key="water_btn"):
-                                            
-                    st.session_state["selected_reagents"].append("water")
-                    st.rerun()
-
-            with st.container(border=True,horizontal_alignment="center",gap="xxsmall"):
-                st.image("images/reagents/bottle_purple.svg",width=30)
-                st.caption("FeCl₃",text_alignment="center")
-                if st.button("Added ✅" if "ferric chloride" in st.session_state["selected_reagents"] else "Add",
-                            disabled= "ferric chloride" in st.session_state["selected_reagents"],
-                            key = "ferric_chloride_btn"):
-                    
-                    st.session_state["selected_reagents"].append("ferric chloride")
-                    st.rerun()
-
-            with st.container(border=True,horizontal_alignment="center",gap="xxsmall"):
-                st.image("images/reagents/bottle_pink.svg",width=30)
-                st.caption("FeSO₄",text_alignment="center")
-                if st.button("Added ✅" if "ferrous sulphate" in st.session_state["selected_reagents"] else "Add",
-                            disabled= "ferrous sulphate" in st.session_state["selected_reagents"],
-                            key = "ferrous_sulphate_btn"):
-                    
-                    st.session_state["selected_reagents"].append("ferrous sulphate")
-                    st.rerun()
-
-            with st.container(border=True,horizontal_alignment="center",gap="xxsmall"):
-                st.image("images/reagents/bottle_blue.svg",width=30)
-                st.caption("BaCl₂",text_alignment="center")
-                if st.button("Added ✅" if "barium chloride" in st.session_state["selected_reagents"] else "Add",
-                            disabled= "barium chloride" in st.session_state["selected_reagents"],
-                            key = "barium_chloride_btn"):
-                    
-                    st.session_state["selected_reagents"].append("barium chloride")
-                    st.rerun()       
+            draw_reagent_button("water", None, "blue")
+            draw_reagent_button("ferric chloride", "FeCl₃", "purple")
+            draw_reagent_button("ferrous sulphate", "FeSO₄", "pink")
+            draw_reagent_button("barium chloride", "BaCl₂", "blue")     
             
         with col2:
             #magnesium sulphate, lead acetate, silver nitrate
-            with st.container(border=True,horizontal_alignment="center",gap ="xxsmall"):
-                st.image("images/reagents/bottle_grey.svg",width=30)
-                st.caption("MgSO₄",text_alignment="center")
-                if st.button("Added ✅" if "magnesium sulphate" in st.session_state["selected_reagents"] else "Add",  
-                            disabled= "magnesium sulphate" in st.session_state["selected_reagents"],
-                            key="magnesium_sulphate_btn"):
-                                            
-                    st.session_state["selected_reagents"].append("magnesium sulphate")
-                    st.rerun()
-
-            with st.container(border=True,horizontal_alignment="center",gap="xxsmall"):
-                st.image("images/reagents/bottle_green.svg", width=30)
-                st.caption("Lead Acetate",text_alignment="center")
-                if st.button("Added ✅" if "lead acetate" in st.session_state["selected_reagents"] else "Add",
-                            disabled= "lead acetate" in st.session_state["selected_reagents"],
-                            key = "lead_acetate_btn"):
-                        
-                    st.session_state["selected_reagents"].append("lead acetate")
-                    st.rerun()
-
-            with st.container(border=True,horizontal_alignment="center",gap="xxsmall"):
-                st.image("images/reagents/bottle_orange.svg", width=30)
-                st.caption("AgNO₃",text_alignment="center")
-                if st.button("Added ✅" if "silver nitrate" in st.session_state["selected_reagents"] else "Add",
-                            disabled= "silver nitrate" in st.session_state["selected_reagents"],
-                            key = "silver_nitrate_btn"):
-                        
-                    st.session_state["selected_reagents"].append("silver nitrate")
-                    st.rerun()          
+            draw_reagent_button("magnesium sulphate", "MgSO₄", "grey")
+            draw_reagent_button("lead acetate", None, "green")
+            draw_reagent_button("silver nitrate", "AgNO₃", "orange")
+       
         with col3:
             #acidified potassium dichromate, oxalic acid, conc h2so4
-            with st.container(border=True,horizontal_alignment="center",gap="xxsmall"):
-                st.image("images/reagents/bottle_orange.svg",width=30)
-                st.caption("Acid.K₂Cr₂O₇",text_alignment="center")
-                if st.button("Added ✅" if "acidified potassium dichromate" in st.session_state["selected_reagents"] else "Add",
-                            disabled= "acidified potassium dichromate" in st.session_state["selected_reagents"],
-                            key = "acidified_potassium_dichromatebtn"):
-                        
-                    st.session_state["selected_reagents"].append("acidified potassium dichromate")
-                    st.rerun()
-                
-            with st.container(border=True,horizontal_alignment="center",gap="xxsmall"):
-                st.image("images/reagents/bottle_darkblue.svg",width=30)
-                st.caption("Oxalic Acid",text_alignment="center")
-                if st.button("Added ✅" if "oxalic acid" in st.session_state["selected_reagents"] else "Add",
-                            disabled= "oxalic acid" in st.session_state["selected_reagents"],
-                            key = "oxalic_acid_btn"):
-                    
-                    st.session_state["selected_reagents"].append("oxalic acid")
-                    st.rerun()   
-
-            with st.container(border=True,horizontal_alignment="center",gap="xxsmall"):
-                st.image("images/reagents/bottle_yellow.svg",width=30)
-                st.caption("Conc. H₂SO₄",text_alignment="center")
-                if st.button("Added ✅" if "concentrated sulphuric acid" in st.session_state["selected_reagents"] else "Add",
-                            disabled= "concentrated sulphuric acid" in st.session_state["selected_reagents"],
-                            key = "conc_h2so4__btn"):
-                    
-                    st.session_state["selected_reagents"].append("concentrated sulphuric acid")
-                    st.rerun() 
+            draw_reagent_button("acidified potassium dichromate", "Acid.K₂Cr₂O₇", "orange")
+            draw_reagent_button("oxalic acid", None, "darkblue")
+            draw_reagent_button("concentrated sulphuric acid", "Conc. H₂SO₄", "yellow")
 
         #perform test and get result from logic
         with st.container(horizontal=True,horizontal_alignment="center",gap="medium"):
@@ -357,7 +251,7 @@ def anion_confirmatory_test_screen():
             st.image("images/test_tubes/salt.svg")     
 
 def anion_confirmatory_test_interpretation_screen():
-    st.title("WHAT DOES IT THIS SUGGEST?", text_alignment="center")
+    st.title("WHAT DOES THIS SUGGEST?", text_alignment="center")
     st.markdown(":gray[Based on the observation, guess which anion is present]",
                 text_alignment="center")
     st.divider()
@@ -381,19 +275,19 @@ def anion_confirmatory_test_interpretation_screen():
     else:
         st.success(msg)
 
-def feedback_screen(feedback_type = "feedback"): 
+def feedback_screen(confirmatory_obs,feedback_type = "feedback"): 
     #default anion - just for safety
     # feedback type can be "feedback" or "feedback_cation"
     st.title("FEEDBACK", text_alignment="center")
     st.divider()
-    st.error("Incorrect guess!")
+    st.error("Incorrect guess! / Incorrect test performed!")
     st.subheader("Would you like feedback?")
     with st.container(horizontal=True,horizontal_alignment="center",gap="medium"):
         msg = ""
         if st.button("Yes - Show Feedback!",width="stretch"):
-            msg, st.session_state["curr_state"] = logic.handle_action(feedback_type, "yes")
+            msg, st.session_state["curr_state"] = logic.handle_action(feedback_type, "yes", confirmatory_obs)
         if st.button("No - End Phase",width="stretch",type="primary"):
-            msg, st.session_state["curr_state"] = logic.handle_action(feedback_type, "no")
+            msg, st.session_state["curr_state"] = logic.handle_action(feedback_type, "no", confirmatory_obs)
         
     st.warning(msg)
 
@@ -411,9 +305,8 @@ def main():
     elif st.session_state["curr_state"] == "interpreting_confirmatory_test":
         anion_confirmatory_test_interpretation_screen()
     elif st.session_state["curr_state"] == "feedback":
-        feedback_screen("feedback")
+        feedback_screen(logic.anion_confirmatory_observation,"feedback")
     elif st.session_state["curr_state"] == "feedback_cation":
-        feedback_screen("feedback_cation")
+        feedback_screen("","feedback_cation")
 
 main()
-
