@@ -9,6 +9,9 @@ cation_confirmatory_guess = None
 anion_complete = False
 cation_complete = False
 
+#to store result of tests
+dry_test_observation = ""
+anion_confirmatory_observation = ""
 #anions and their test data
 anions = ("acetate",
            "carbonate", "sulphide", "sulphite", "nitrite",
@@ -311,11 +314,12 @@ def handle_action(state, user_input,confirmatory_test_result=None):
     # cations-
     #   "awaiting_wet_test", "interpreting_wet_test", "awaiting_confirmatory_test_cation", "interpreting_confirmatory_test_cation", "feedback_cation"
     # choosing phase - symbolic state
-    global anion_dry_guess , anion_confirmatory_guess , cation_wet_guess , cation_confirmatory_guess, anion_complete, cation_complete
+    global anion_dry_guess , anion_confirmatory_guess , cation_wet_guess , cation_confirmatory_guess, anion_complete, cation_complete, dry_test_observation, anion_confirmatory_observation
         
     if state == "awaiting_dry_test":
         # Process dry test action
         result = test_evaluator("anion", anion, "dry_test", user_input)
+        dry_test_observation = result
         return result, "interpreting_dry_test" #next state
         
     elif state == "interpreting_dry_test":
@@ -329,6 +333,7 @@ def handle_action(state, user_input,confirmatory_test_result=None):
     elif state == "awaiting_confirmatory_test":
         # Process confirmatory test action
         result = test_evaluator("anion", anion, "confirmatory_test", user_input)
+        anion_confirmatory_observation = result
         if result != "no reaction":
             return result, "interpreting_confirmatory_test" #next state
         else:
