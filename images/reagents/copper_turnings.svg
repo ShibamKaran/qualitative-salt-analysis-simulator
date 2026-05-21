@@ -1,0 +1,13 @@
+<svg viewBox="0 45 38 18" xmlns="http://www.w3.org/2000/svg" width="38" height="18">
+  <!-- China dish -->
+  <ellipse cx="19" cy="52" rx="16" ry="5" fill="#E8E8E8" stroke="#AAAAAA" stroke-width="1.5"/>
+  <path d="M3 52 Q3 62 19 62 Q35 62 35 52Z" fill="#F2F2F2" stroke="#AAAAAA" stroke-width="1.5"/>
+  <!-- Copper turnings - small curved wire-like pieces -->
+  <path d="M11 50 Q13 47 15 50 Q17 53 15 51" fill="none" stroke="#B87333" stroke-width="2" stroke-linecap="round"/>
+  <path d="M16 49 Q18 46 20 49 Q22 52 20 50" fill="none" stroke="#C68642" stroke-width="2" stroke-linecap="round"/>
+  <path d="M21 50 Q23 47 25 50 Q27 53 25 51" fill="none" stroke="#B87333" stroke-width="2" stroke-linecap="round"/>
+  <path d="M13 52 Q15 49 17 52 Q19 55 17 53" fill="none" stroke="#C68642" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M19 51 Q21 48 23 51 Q25 54 23 52" fill="none" stroke="#B87333" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M14 48 Q16 45 18 48" fill="none" stroke="#C68642" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M20 48 Q22 45 24 48" fill="none" stroke="#B87333" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

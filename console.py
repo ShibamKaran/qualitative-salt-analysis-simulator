@@ -1,25 +1,6 @@
 import random
 import logic
 
-anions = ("acetate",
-           "carbonate", "sulphide", "sulphite", "nitrite",
-           "chloride", "bromide", "iodide", "nitrate",
-           "sulphate")
-
-cations = ("ammonium",
-            "lead", "copper",
-            "ferric", "aluminium",
-            "zinc", "cobalt", "nickel", "manganese",
-            "barium", "calcium", "strontium", 
-            "magnesium")
-
-anion = random.choice(anions)
-cation = random.choice(cations)
-
-#passes them to logic
-logic.anion = anion
-logic.cation = cation
-
 def tuple_input(msg):
 
     inp = input(msg).split(",")
@@ -95,6 +76,6 @@ def user_console():
             user_console_cation()
     
     print("All tests complete. Thank you for playing!")
-    print(f"The salt was {cation} {anion}")
+    print(f"The salt was {logic.cation} {logic.anion}")
 
 user_console()
