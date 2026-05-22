@@ -36,7 +36,7 @@ Requires Python 3 and `logic.py` in the same folder.
 **Windows:** `python main.py` or `python console.py`
 
 ### Web app
-https://qualitative-salt-analysis-simulator.streamlit.app
+https://salt-analysis-simulator.streamlit.app
 
 ## Planned
 - Multiple user can use at same time without messing with eachother
