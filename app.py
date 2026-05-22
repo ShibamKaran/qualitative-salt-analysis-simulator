@@ -1,6 +1,10 @@
 import streamlit as st
-import logic
-import random
+#import logic
+#import random
+
+#for multi user, took help from ai (idk this stuff)
+import importlib.util
+import uuid
 
 anions = ("acetate",
            "carbonate", "sulphide", "sulphite", "nitrite",
@@ -14,22 +18,26 @@ cations = ("ammonium",
             "barium", "calcium", "strontium", 
             "magnesium")
 
+st.set_page_config(page_title="Salt Analysis Simulator", layout="centered")
 
 #session states i.e. global variable
-if "initialized" not in st.session_state:
-    logic.anion = random.choice(logic.anions)
-    logic.cation = random.choice(logic.cations)
-    logic.anion_dry_guess = None
-    logic.anion_confirmatory_guess = None
-    logic.cation_wet_guess = None
-    logic.cation_confirmatory_guess = None
-    logic.anion_complete = False
-    logic.cation_complete = False
-    logic.dry_test_observation = ""
-    logic.anion_confirmatory_observation = ""
-    logic.wet_test_observation = ""
-    logic.cation_confirmatory_observation = ""
-    st.session_state["initialized"] = True
+
+#for multi user, took help from ai (idk this stuff)
+#it generates a unique id for each user and stores it in session state, so that the state is maintained separately for each user.
+if "logic" not in st.session_state:
+    module_name = f"logic_{uuid.uuid4().hex}"
+
+    spec = importlib.util.spec_from_file_location(
+        module_name,
+        "logic.py"
+    )
+
+    logic = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(logic)
+
+    st.session_state["logic"] = logic
+
+logic = st.session_state["logic"]
 
 if "selected_reagents" not in st.session_state:
     st.session_state["selected_reagents"] = []
