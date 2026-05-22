@@ -16,6 +16,21 @@ cations = ("ammonium",
 
 
 #session states i.e. global variable
+if "initialized" not in st.session_state:
+    logic.anion = random.choice(logic.anions)
+    logic.cation = random.choice(logic.cations)
+    logic.anion_dry_guess = None
+    logic.anion_confirmatory_guess = None
+    logic.cation_wet_guess = None
+    logic.cation_confirmatory_guess = None
+    logic.anion_complete = False
+    logic.cation_complete = False
+    logic.dry_test_observation = ""
+    logic.anion_confirmatory_observation = ""
+    logic.wet_test_observation = ""
+    logic.cation_confirmatory_observation = ""
+    st.session_state["initialized"] = True
+
 if "selected_reagents" not in st.session_state:
     st.session_state["selected_reagents"] = []
 
@@ -418,7 +433,7 @@ def cation_confirmatory_test_screen():
             draw_reagent_button("potassium ferrocyanide", "K₄[Fe(CN)₆]", "grey")
             draw_reagent_button("blue litmus solution", "Blue Lit. Sol.", "darkblue")
             draw_reagent_button("diammonium hydrogen phosphate", "(NH₄)₂HPO₄", "orange")
-            draw_reagent_button("Nessler rea.", None, "yellow")
+            draw_reagent_button("nessler's reagent", "Nessler rea.", "yellow")
 
         #perform test and get result from logic
         with st.container(horizontal=True,horizontal_alignment="center",gap="medium"):
@@ -507,20 +522,7 @@ def final_screen():
 
     with st.container(horizontal=True,horizontal_alignment="center",gap="medium"):
         if st.button("Start New Analysis", icon="🔄", icon_position="right"):
-            st.session_state["curr_state"] = "start"
-            #reset logic variables for new analysis
-            logic.anion_dry_guess = None
-            logic.anion_confirmatory_guess = None
-            logic.cation_wet_guess = None
-            logic.cation_confirmatory_guess = None
-            logic.anion_complete = False
-            logic.cation_complete = False
-            logic.dry_test_observation = ""
-            logic.anion_confirmatory_observation = ""
-            logic.wet_test_observation = ""
-            logic.cation_confirmatory_observation = ""
-            logic.anion = random.choice(logic.anions)
-            logic.cation = random.choice(logic.cations)
+            st.session_state.clear()
             st.rerun()
     
         if st.button("Balloons Again!", icon="🎈", icon_position="right"):
