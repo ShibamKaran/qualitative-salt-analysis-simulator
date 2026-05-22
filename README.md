@@ -2,6 +2,10 @@
 
 An interactive simulator that helps students practice qualitative salt analysis practicals — the way they would in a real lab.
 
+## Website
+
+🔗 [salt-analysis-simulator.streamlit.app](https://salt-analysis-simulator.streamlit.app)
+
 ## What it does
 Students are given an unknown salt and must identify both the acid radical (anion) and basic radical (cation) by performing the correct chemical tests in sequence. The simulator evaluates not just the final answer but the entire reasoning process — wrong reagents give no reaction, and feedback is provided based on where the student went wrong.
 
@@ -13,13 +17,13 @@ School students (Class 11/12) preparing for chemistry practical exams, particula
 - **Thinking layer** — students must interpret observations before proceeding
 - **Targeted feedback** — feedback identifies specifically where reasoning went wrong
 - **Realistic flow** — mirrors the actual lab procedure students follow in exams
+  
+## Covers
 
-## Current State
-- Console version complete and tested
-- Full anion detection (10 anions) with dry test and confirmatory test
-- Full cation detection (13 cations) with wet test and confirmatory test
-- Logic layer separated and ready for GUI development
-- Streamlit web app but only one user can play at a time (multi user soon)
+- 10 anions — acetate, carbonate, sulphide, sulphite, nitrite, chloride, bromide, 
+  iodide, nitrate, sulphate
+- 13 cations — ammonium, lead, copper, ferric, aluminium, zinc, cobalt, nickel, 
+  manganese, barium, calcium, strontium, magnesium
   
 ## Python files
 - `logic.py` — core logic layer: chemistry data, state machine, test evaluator. No display code.
@@ -39,10 +43,27 @@ Requires Python 3 and `logic.py` in the same folder.
 https://salt-analysis-simulator.streamlit.app
 
 ## Planned
-- Multiple user can use at same time without messing with eachother
+- Add colored salt images in test tube.
 
 ## Tech Stack
 - **Language**: Python
 - **Console version**: Built-in Python only
-- **Web app**: Streamlit
+- **Web app**: Streamlit 1.57.0
 - **Deployment**: Streamlit Cloud (free)
+
+## Reference
+
+See [HOW_TO_PLAY.md](HOW_TO_PLAY.md) for a guide on how to use the simulator.
+
+## Credits
+
+### Images (.SVG Files)
+- Reagent bottle images — generated using Claude (Anthropic)
+- Test tube images — generated using Gemini (Google)
+
+### Code Assistance
+- Multi-user session handling — help from ChatGPT (OpenAI)
+
+---
+*All chemistry logic, app structure, and overall design were built by me(Shibam Karan). 
+AI tools were used for specific assets mentioned above under credits. (I like to be transparent about this stuff :P)*
