@@ -19,13 +19,13 @@ School students (Class 11/12) preparing for chemistry practical exams, particula
 - Full anion detection (10 anions) with dry test and confirmatory test
 - Full cation detection (13 cations) with wet test and confirmatory test
 - Logic layer separated and ready for GUI development
-- Streamlit web app in development
+- Streamlit web app but only one user can play at a time (multi user soon)
   
 ## Python files
 - `logic.py` — core logic layer: chemistry data, state machine, test evaluator. No display code.
 - `console.py` — console interface: imports from logic.py, handles terminal interaction.
 - `main.py` — original version, preserved for reference.
-- `app.py` — Streamlit web app (coming soon)
+- `app.py` — Streamlit web app
 
 ## How to Run
 
@@ -35,15 +35,14 @@ Requires Python 3 and `logic.py` in the same folder.
 **Mac/Linux:** `python3 main.py` or `python3 console.py`  
 **Windows:** `python main.py` or `python console.py`
 
-### Web app (coming soon)
-Will be accessible via a browser link — no installation needed.
-A live link will be added here once deployed.
+### Web app
+https://qualitative-salt-analysis-simulator.streamlit.app
 
 ## Planned
-- Graphics web version with streamlit
+- Multiple user can use at same time without messing with eachother
 
 ## Tech Stack
 - **Language**: Python
 - **Console version**: Built-in Python only
-- **Web app**: Streamlit (in development)
+- **Web app**: Streamlit
 - **Deployment**: Streamlit Cloud (free)
