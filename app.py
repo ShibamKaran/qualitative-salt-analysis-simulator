@@ -166,14 +166,18 @@ def anion_dry_test_screen():
 
         #perform test and get result from logic
         with st.container(horizontal=True,horizontal_alignment="center",gap="medium"):
-            if st.button("Perform Test", disabled = len(st.session_state["selected_reagents"])==0, width=140):
+            perfom_test_btn = st.button("Perform Test", disabled = len(st.session_state["selected_reagents"])==0, width=140)
+            if perfom_test_btn:
                 logic.dry_test_observation, st.session_state["curr_state"] = logic.handle_action("awaiting_dry_test", tuple(st.session_state["selected_reagents"]))
                 st.session_state["selected_reagents"] = []
                 
             if st.button("Reset Test",width=140,type="primary"):
                 st.session_state["selected_reagents"] = []
                 st.rerun()
-        
+        if perfom_test_btn:
+            st.button("Proceed", icon="➡️", icon_position="right", width="stretch")
+            st.write("Please click any button to proceed further.")
+
     with obs_col:
         st.subheader("Observation")
         if logic.dry_test_observation != "no reaction":
@@ -252,14 +256,19 @@ def anion_confirmatory_test_screen():
 
         #perform test and get result from logic
         with st.container(horizontal=True,horizontal_alignment="center",gap="medium"):
-            if st.button("Perform Test", disabled = len(st.session_state["selected_reagents"])==0, width=140):
+            perform_test_btn = st.button("Perform Test", disabled = len(st.session_state["selected_reagents"])==0, width=140)
+            if perform_test_btn:
                 logic.anion_confirmatory_observation, st.session_state["curr_state"] = logic.handle_action("awaiting_confirmatory_test", tuple(st.session_state["selected_reagents"]))
                 st.session_state["selected_reagents"] = []
                 
             if st.button("Reset Test",width=140,type="primary"):
                 st.session_state["selected_reagents"] = []
                 st.rerun()
-        
+
+        if perform_test_btn:
+            st.button("Proceed", icon="➡️", icon_position="right", width="stretch")
+            st.write("Please click any button to proceed further.")     
+    
     with obs_col:
         st.subheader("Observation")
         if logic.anion_confirmatory_observation != "no reaction":
@@ -300,6 +309,8 @@ def anion_confirmatory_test_interpretation_screen():
         st.rerun()
     else:
         st.success(msg)
+        if "Correct!" in msg:
+            st.button("Proceed", icon="➡️", icon_position="right", width="stretch")
 
 def feedback_screen(confirmatory_obs,feedback_type = "feedback"): 
     #default anion - just for safety
@@ -316,6 +327,9 @@ def feedback_screen(confirmatory_obs,feedback_type = "feedback"):
             msg, st.session_state["curr_state"] = logic.handle_action(feedback_type, "no", confirmatory_obs)
         
     st.warning(msg)
+    if msg!="":
+        st.button("Proceed", icon="➡️", icon_position="right", width="stretch")
+        st.write("Please click any button to proceed further.")
 
 def cation_wet_test_screen():
     st.title("CATION -- WET TEST",
@@ -356,14 +370,19 @@ def cation_wet_test_screen():
 
         #perform test and get result from logic
         with st.container(horizontal=True,horizontal_alignment="center",gap="medium"):
-            if st.button("Perform Test", disabled = len(st.session_state["selected_reagents"])==0, width=140):
+            perform_test_btn = st.button("Perform Test", disabled = len(st.session_state["selected_reagents"])==0, width=140)
+            if perform_test_btn :
                 logic.wet_test_observation, st.session_state["curr_state"] = logic.handle_action("awaiting_wet_test", tuple(st.session_state["selected_reagents"]))
                 st.session_state["selected_reagents"] = []
                 
             if st.button("Reset Test",width=140,type="primary"):
                 st.session_state["selected_reagents"] = []
                 st.rerun()
-        
+
+        if perform_test_btn:
+            st.button("Proceed", icon="➡️", icon_position="right", width="stretch")
+            st.write("Please click any button to proceed further.")      
+    
     with obs_col:
         st.subheader("Observation")
         if logic.wet_test_observation != "no reaction":
@@ -445,13 +464,19 @@ def cation_confirmatory_test_screen():
 
         #perform test and get result from logic
         with st.container(horizontal=True,horizontal_alignment="center",gap="medium"):
-            if st.button("Perform Test", disabled = len(st.session_state["selected_reagents"])==0, width=140):
+            perform_test_btn = st.button("Perform Test", disabled = len(st.session_state["selected_reagents"])==0, width=140)
+            if perform_test_btn:
                 logic.cation_confirmatory_observation, st.session_state["curr_state"] = logic.handle_action("awaiting_confirmatory_test_cation", tuple(st.session_state["selected_reagents"]))
                 st.session_state["selected_reagents"] = []
                 
             if st.button("Reset Test",width=140,type="primary"):
                 st.session_state["selected_reagents"] = []
                 st.rerun()
+
+    if perform_test_btn:
+            st.button("Proceed", icon="➡️", icon_position="right", width="stretch")
+            st.write("Please click any button to proceed further.")     
+    
     with obs_col:
         st.subheader("Observation")
         if logic.cation_confirmatory_observation != "no reaction":
@@ -496,6 +521,9 @@ def cation_confirmatory_test_interpretation_screen():
         st.info(msg)
     else:
         st.success(msg)
+        if "Correct!" in msg:
+            st.button("Proceed", icon="➡️", icon_position="right", width="stretch")
+
 
     if msg == "Let's do another confirmatory test!":
         st.button("Perform Another Confirmatory Test", icon="🔄", icon_position="right")    
