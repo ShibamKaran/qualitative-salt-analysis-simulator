@@ -26,7 +26,7 @@ School students (Class 11/12) preparing for chemistry practical exams, particula
   manganese, barium, calcium, strontium, magnesium
   
 ## Python files
-- `logic.py` — core logic layer: chemistry data, state machine, test evaluator. No display code.
+- `logic.py` — core logic layer: chemistry data, state machine, test evaluator. Has class Logic.
 - `console.py` — console interface: imports from logic.py, handles terminal interaction.
 - `main.py` — original version, preserved for reference.
 - `app.py` — Streamlit web app
@@ -60,9 +60,6 @@ See [HOW_TO_PLAY.md](HOW_TO_PLAY.md) for a guide on how to use the simulator.
 ### Images (.SVG Files)
 - Reagent bottle images — generated using Claude (Anthropic)
 - Test tube images — generated using Gemini (Google)
-
-### Code Assistance
-- Multi-user session handling — help from ChatGPT (OpenAI)
 
 ---
 *All chemistry logic, app structure, and overall design were built by me(Shibam Karan). 
