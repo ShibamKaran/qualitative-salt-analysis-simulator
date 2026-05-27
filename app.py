@@ -1,10 +1,5 @@
 import streamlit as st
-#import logic
-#import random
-
-#for multi user, took help from ai (idk this stuff)
-import importlib.util
-import uuid
+from logic import Logic
 
 anions = ("acetate",
            "carbonate", "sulphide", "sulphite", "nitrite",
@@ -21,21 +16,8 @@ cations = ("ammonium",
 st.set_page_config(page_title="Salt Analysis Simulator", layout="centered")
 
 #session states i.e. global variable
-
-#for multi user, took help from ai (idk this stuff)
-#it generates a unique id for each user and stores it in session state, so that the state is maintained separately for each user.
 if "logic" not in st.session_state:
-    module_name = f"logic_{uuid.uuid4().hex}"
-
-    spec = importlib.util.spec_from_file_location(
-        module_name,
-        "logic.py"
-    )
-
-    logic = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(logic)
-
-    st.session_state["logic"] = logic
+    st.session_state["logic"] = Logic()
 
 logic = st.session_state["logic"]
 
@@ -76,7 +58,6 @@ def start_screen():
     st.space("xsmall")
     st.caption("Built for students preparing for practical exams",
                text_alignment="center")
-
 
 def phase_selection_screen():
     st.title("CHOOSE A PHASE",
@@ -473,9 +454,9 @@ def cation_confirmatory_test_screen():
                 st.session_state["selected_reagents"] = []
                 st.rerun()
 
-    if perform_test_btn:
-            st.button("Proceed", icon="➡️", icon_position="right", width="stretch")
-            st.write("Please click any button to proceed further.")     
+        if perform_test_btn:
+                st.button("Proceed", icon="➡️", icon_position="right", width="stretch")
+                st.write("Please click any button to proceed further.")     
     
     with obs_col:
         st.subheader("Observation")

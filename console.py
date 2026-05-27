@@ -1,5 +1,7 @@
-import random
-import logic
+from logic import Logic
+
+#create an object
+logic = Logic()
 
 def tuple_input(msg):
 
